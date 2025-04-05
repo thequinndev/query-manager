@@ -5,6 +5,7 @@ The intent of this module is to support the maintenance and usage of queries use
   * Auto generation of documentation for my suite of queries so I don't have to write as much of it myself.
 * Properly inferring the input and output data types for all queries (using zod) - even bespoke ones.
   * If I store zod schemas to use for my database queries I can tie them into other downstream things like APIs
+  * I wanted to make raw sql queries type-safe - without needing to use a query builder.
 * Simplified query calling
   * When I call a query I want to know exactly what I need to provide, what its data type is, and what I will get back.
     
