@@ -32,10 +32,13 @@ export default defineConfig({
         '**/examples/**', // Ignore examples
         // The below are export files only
         '**/src/index.ts',
+        '**/src/index.d.ts',
         '**/src/query-manager.ts',
+        '**/src/query-manager/index.ts',
         // Config files only
         '.eslintrc.js',
         'query-manager.d.ts',
+        'index.d.ts',
         'tsup.config.ts',
         'vite.config.mts'
       ]
