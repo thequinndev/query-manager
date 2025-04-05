@@ -23,7 +23,7 @@ export const QueryManager = <
             queryItem.onResultRetrieval(result)
         }
 
-        // Otherwise return all rows
+        // Return the parsed result
         return queryItem.returns.parse(result)
     }
 
