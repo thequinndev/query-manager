@@ -27,8 +27,41 @@ export const QueryManager = <
         return queryItem.returns.parse(result)
     }
 
+    const doOperationAsClient = async <
+        Alias extends keyof Queries,
+        QueryItem extends GetQuery<Queries, Alias>,
+        In extends QueryIn<QueryItem['parameters']>,
+        Out extends QueryOut<QueryItem>,
+        Fn extends (
+            input: {
+                client: Client,
+                queryItem: QueryItem,
+                parameters: (params: In) => In,
+                result: (resolve: unknown) => Out
+            }
+        ) => Out
+    >(alias: Alias, fn: Fn) => {
+        const queryItem = config.queries[alias] as QueryItem
+
+        const result = (input: unknown): Out => {
+            return input as Out
+        }
+
+        const parameters = <T>(input: T) => {
+            return input
+        }
+
+        return queryItem.returns.parse(fn({
+            client: config.client.client,
+            queryItem: queryItem as QueryItem,
+            result,
+            parameters,
+        }))
+    }
+
     return {
         client: config.client.client,
+        doOperationAsClient,
         run
     }
 }

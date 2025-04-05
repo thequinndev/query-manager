@@ -282,4 +282,27 @@ describe('QueryManager', () => {
             },
         )
     })
+
+    it('Will allow custom running of operations', async () => {
+
+        const result = await userQueryManager.doOperationAsClient('selectIndividualColumns', ({
+            client,
+            queryItem,
+            parameters,
+            result,
+        }) => {
+            return result(client.prepare(queryItem.query).get(
+                queryItem.parameters?.arrayResolver(parameters({
+                    id: 2
+                }))
+            ))
+        })
+
+        expect(result).toEqual(
+            {
+                "date": "2025-04-05T14:30:00Z",
+                "name": "test1",
+            },
+        )
+    })
 })
