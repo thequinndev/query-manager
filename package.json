@@ -3,18 +3,16 @@
   "version": "0.0.1",
   "description": "",
   "type": "module",
-  "main": "dist/cjs/index.js",
+  "main": "./dist/esm/index.js",
   "exports": {
     ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js"
+      "import": "./dist/esm/index.js"
     }
   },
   "scripts": {
     "test": "vitest",
     "coverage": "vitest --coverage",
-    "build": "pnpm run build:cjs && pnpm run build:esm",
-    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build": "pnpm run build:esm",
     "build:esm": "tsc -p tsconfig.esm.json",
     "generate:example:db-doc": "npx tsx ./examples/query-manager/document/index.ts",
     "pg:up": "docker build -t query-manager-pg . && docker run --rm --name qm-test-pg -p 5432:5432 -d query-manager-pg",
