@@ -18,7 +18,7 @@ const pgClient = (client: pg.Client): ClientInterface<pg.Client> => {
 
         const result = resolvedParams ? client.query(queryItem.query, resolvedParams) : client.query(queryItem.query)
 
-        let resolved = await result
+        const resolved = await result
         if (queryItem.meta.isFunction) {
             // For PG functions the result returns indexed by the function name as a tuple
             if (Array.isArray(resolved.rows)) {

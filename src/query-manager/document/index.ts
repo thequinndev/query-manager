@@ -18,7 +18,7 @@ export const DocumentManager = <
 >(config: {
   queries: Queries
 }) => {
-  let aliasMetadata: Record<string, QueryAnnotation<BaseCollapsedQueryItem>> = {};
+  const aliasMetadata: Record<string, QueryAnnotation<BaseCollapsedQueryItem>> = {};
 
   const annotate = <
     Alias extends keyof Queries,
