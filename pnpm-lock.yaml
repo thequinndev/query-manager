@@ -7,9 +7,6 @@ settings:
 importers:
   .:
     dependencies:
-      openapi3-ts:
-        specifier: ^4.4.0
-        version: 4.4.0
       zod:
         specifier: ^3.24.2
         version: 3.24.2
@@ -2122,12 +2119,6 @@ packages:
       }
     engines: { node: ">=18" }
 
-  openapi3-ts@4.4.0:
-    resolution:
-      {
-        integrity: sha512-9asTNB9IkKEzWMcHmVZE7Ts3kC9G7AFHfs8i7caD8HbI76gEjdkId4z/AkP83xdZsH7PLAnnbl47qZkXuxpArw==,
-      }
-
   optionator@0.9.4:
     resolution:
       {
@@ -4239,10 +4230,6 @@ snapshots:
   onetime@7.0.0:
     dependencies:
       mimic-function: 5.0.1
-
-  openapi3-ts@4.4.0:
-    dependencies:
-      yaml: 2.7.1
 
   optionator@0.9.4:
     dependencies:
