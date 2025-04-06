@@ -2,3 +2,4 @@ node_modules
 dist
 coverage
 query-manager.db
+query-manager.invalid.db

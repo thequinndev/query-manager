@@ -7,6 +7,6 @@ export interface StatementRunOptions {
 
 export interface ClientInterface<T> {
     client: T,
-    setClient?: (client: T) => void,
+    setClient: (client: T) => void,
     statementRun: (options: StatementRunOptions) => Promise<any>
 }

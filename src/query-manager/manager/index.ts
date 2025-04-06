@@ -65,6 +65,7 @@ export const QueryManager = <
     return {
         client: config.client.client,
         doOperationAsClient,
-        run
+        run,
+        setClient: config.client.setClient
     }
 }

@@ -6,32 +6,39 @@ const db = new Database('query-manager.db');
 /** This client is used for unit testing */
 export const sqliteClient = (): ClientInterface<Database.Database> => {
 
-  const statementRun = async (options: StatementRunOptions) => {
-    const { queryItem, parameters } = options
+    let client = db
 
-    const prepared = db.prepare(queryItem.query)
-
-    const resolvedParams = queryItem.parameters?.arrayResolver(parameters)
-
-    if (queryItem.meta.isSelect) {
-        if (queryItem.meta.returnsOne) {
-            const result = resolvedParams ? prepared.get(resolvedParams) : prepared.get()
-            return result
-        }
-
-        if (queryItem.meta.returnsMany) {
-            const result = resolvedParams ? prepared.all(resolvedParams) : prepared.all()
-            return result
-        }
+    const setClient = (_client: Database.Database) => {
+        client = _client
     }
 
-    const result = resolvedParams ? prepared.run(resolvedParams) : prepared.run()
-    return result
-    
-  };
+    const statementRun = async (options: StatementRunOptions) => {
+        const { queryItem, parameters } = options
 
-  return {
-    client: db,
-    statementRun,
-  };
+        const prepared = client.prepare(queryItem.query)
+
+        const resolvedParams = queryItem.parameters?.arrayResolver(parameters)
+
+        if (queryItem.meta.isSelect) {
+            if (queryItem.meta.returnsOne) {
+                const result = resolvedParams ? prepared.get(resolvedParams) : prepared.get()
+                return result
+            }
+
+            if (queryItem.meta.returnsMany) {
+                const result = resolvedParams ? prepared.all(resolvedParams) : prepared.all()
+                return result
+            }
+        }
+
+        const result = resolvedParams ? prepared.run(resolvedParams) : prepared.run()
+        return result
+
+    };
+
+    return {
+        client: db,
+        statementRun,
+        setClient
+    };
 };

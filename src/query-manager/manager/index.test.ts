@@ -2,6 +2,7 @@ import { sqliteClient } from '@examples/clients/sqlite'
 import { QueryManager } from '.'
 import { query, queryGroup, queryParameter } from '../queries'
 import { z } from 'zod'
+import Database from 'better-sqlite3'
 
 const userTableSchema = z.object({
     id: z.coerce.number().min(1).max(400000),
@@ -201,9 +202,7 @@ describe('QueryManager', () => {
         })
     })
 
-
     it('should then fail to select the delete id', async () => {
-
         await expect(userQueryManager.run('selectSingleTest', {
             id: id as number
         })).rejects.toThrow()
@@ -304,5 +303,17 @@ describe('QueryManager', () => {
                 "name": "test1",
             },
         )
+    })
+
+    it('Will fail if provided an invalid client', async () => {
+        
+        // New DB that will be completely empty
+        const invalidDB = new Database('query-manager.invalid.db')
+
+        userQueryManager.setClient(invalidDB)
+
+        await expect(userQueryManager.run('selectSingleTest', {
+            id: id as number
+        })).rejects.toThrow()
     })
 })
