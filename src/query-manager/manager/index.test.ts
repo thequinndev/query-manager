@@ -1,6 +1,6 @@
 import { sqliteClient } from '@examples/clients/sqlite'
 import { QueryManager } from '.'
-import { query, queryGroup, QueryIntent, queryParameter } from '../queries'
+import { query, queryGroup, queryParameter } from '../queries'
 import { z } from 'zod'
 
 const userTableSchema = z.object({
@@ -15,7 +15,7 @@ describe('QueryManager', () => {
         client: sqliteClient(),
         queries: queryGroup([
             query({
-                intent: QueryIntent.Select,
+                intent: 'Select',
                 alias: 'selectSingleTest',
                 description: 'Select single row for test',
                 query: 'select * from user_table where id = ?',
@@ -25,7 +25,7 @@ describe('QueryManager', () => {
                 returns: userTableSchema
             }),
             query({
-                intent: QueryIntent.Insert,
+                intent: 'Insert',
                 alias: 'insertSingleTest',
                 description: 'Insert single row for test',
                 query: 'insert into user_table (name, description, date) values (?, ?, ?)',
@@ -40,7 +40,7 @@ describe('QueryManager', () => {
                 })
             }),
             query({
-                intent: QueryIntent.Upsert,
+                intent: 'Upsert',
                 alias: 'upsertSingleTest',
                 description: 'Upsert single row for test',
                 query: 'insert or replace into user_table (id, name, description, date) values (?, ?, ?, ?)',
@@ -56,7 +56,7 @@ describe('QueryManager', () => {
                 })
             }),
             query({
-                intent: QueryIntent.Delete,
+                intent: 'Delete',
                 alias: 'deleteSingleTest',
                 description: 'Delete single row for test',
                 query: 'delete from user_table where id = ?',
@@ -69,14 +69,14 @@ describe('QueryManager', () => {
                 })
             }),
             query({
-                intent: QueryIntent.Select,
+                intent: 'Select',
                 alias: 'selectManyTest',
                 description: 'Select many rows',
                 query: 'select * from user_table',
                 returns: userTableSchema.array()
             }),
             query({
-                intent: QueryIntent.Select,
+                intent: 'Select',
                 alias: 'selectWithDuplicateParameter',
                 description: 'Select the same row using duplicate parameters',
                 query: 'select * from user_table where id = ? and id = ? and id = ?',
@@ -88,7 +88,7 @@ describe('QueryManager', () => {
                 returns: userTableSchema
             }),
             query({
-                intent: QueryIntent.Select,
+                intent: 'Select',
                 alias: 'selectIndividualColumns',
                 description: 'Select only name and date',
                 query: 'select name, date from user_table where id = ?',

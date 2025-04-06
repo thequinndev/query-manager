@@ -16,11 +16,14 @@ export const QueryManager = <
         Out extends QueryOut<QueryItem>
     >(alias: Alias, parameters?: In): Promise<Out> => {
         const queryItem = config.queries[alias] as QueryItem
-        const result = await config.client.statementRun(queryItem, parameters as any)
+        let result = await config.client.statementRun({
+            queryItem,
+            parameters
+        })
 
         // If onResultRetrieval has been declared then call it
         if (queryItem.onResultRetrieval) {
-            queryItem.onResultRetrieval(result)
+           result = queryItem.onResultRetrieval(result)
         }
 
         // Return the parsed result

@@ -9,13 +9,10 @@ export enum ParameterStrategy {
     Dollar = 4,
 }
 
-export enum QueryIntent {
-    Select = 'Select',
-    Insert = 'Insert',
-    Update = 'Update',
-    Upsert = 'Upsert',
-    Delete = 'Delete',
-}
+export type QueryIntent = 'Select' | 'Insert' | 'Update' | 'Upsert' | 'Delete'
+
+
+export type QueryType = 'BuiltQuery' | 'Function' | 'Procedure'
 
 type SingleKeyRecord = Record<string, z.ZodType<any>>;
 export type ParamSchemaBase = SingleKeyRecord[];
@@ -31,12 +28,13 @@ export type QueryDefinition<
     Returns extends z.ZodType<any>,
 > = {
     intent?: QueryIntent,
+    queryType?: QueryType,
     description?: Description;
     alias: Alias;
     query: QueryString;
     parameters?: Parameters;
     returns: Returns;
-    onResultRetrieval?: (result: any) => void;
+    onResultRetrieval?: (result: any) => any
 };
 
 export type BaseQueryItem = QueryDefinition<
@@ -56,6 +54,9 @@ export type QueryItemMeta = {
     isUpdate: boolean,
     isUpsert: boolean,
     isDelete: boolean,
+    isFunction: boolean,
+    isProcedure: boolean,
+    isBuiltQuery: boolean,
     returnsOne: boolean,
     returnsMany: boolean,
     hasParameters: boolean
@@ -70,7 +71,7 @@ export type QueryCollapsed<
     parameters?: QueryParametersCollapsed<Query['parameters']>;
     returns: Query['returns'];
     meta: QueryItemMeta,
-    onResultRetrieval?: (result: any) => void
+    onResultRetrieval?: (result: any) => any
 }
 
 export type BaseCollapsedQueryItem = QueryCollapsed<BaseQueryItem>;

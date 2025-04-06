@@ -1,12 +1,14 @@
-import { ClientInterface } from "@thequinndev/query-manager/manager/client.interface"
-import { ClientQueryItem } from "@thequinndev/query-manager/queries";
+import { ClientInterface, StatementRunOptions } from "@thequinndev/query-manager/manager/client.interface"
 import Database from 'better-sqlite3';
 
 const db = new Database('query-manager.db');
 
+/** This client is used for unit testing */
 export const sqliteClient = (): ClientInterface<Database.Database> => {
 
-  const statementRun = async (queryItem: ClientQueryItem, parameters?: any) => {
+  const statementRun = async (options: StatementRunOptions) => {
+    const { queryItem, parameters } = options
+
     const prepared = db.prepare(queryItem.query)
 
     const resolvedParams = queryItem.parameters?.arrayResolver(parameters)

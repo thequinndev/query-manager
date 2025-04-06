@@ -9,7 +9,11 @@
     "test": "vitest",
     "coverage": "vitest --coverage",
     "build": "vite build && tsc -p tsconfig.build.json",
-    "generate:example:db-doc": "npx tsx ./examples/query-manager/document/index.ts"
+    "generate:example:db-doc": "npx tsx ./examples/query-manager/document/index.ts",
+    "pg:up": "docker build -t query-manager-pg . && docker run --rm --name qm-test-pg -p 5432:5432 -d query-manager-pg",
+    "pg:logs": "docker logs qm-test-pg",
+    "pg:down": "docker kill qm-test-pg",
+    "pg:test": "npx tsx ./examples/clients/postgres.ts"
   },
   "exports": {
     ".": {
@@ -41,11 +45,13 @@
     "@types/better-sqlite3": "^7.6.13",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.14.0",
+    "@types/pg": "^8.11.11",
     "@vitest/coverage-v8": "^3.1.1",
     "better-sqlite3": "^11.9.1",
     "eslint": "^9.24.0",
     "eslint-config-prettier": "^10.1.1",
     "express": "^5.1.0",
+    "pg": "^8.14.1",
     "prettier": "^3.5.3",
     "tsup": "^8.4.0",
     "tsx": "^4.19.3",
