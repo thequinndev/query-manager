@@ -4,18 +4,13 @@
 
 [Read about it here](https://github.com/thequinndev/query-manager/blob/main/module-intent.md)
 
+[Documentation](https://github.com/thequinndev/query-manager/wiki#query-manager-documentation)
+
 ### Query Manager
 
 The query manager utilities can be used to store queries relating to specific database entities. The queries can be in any format you like. See the `examples/query-manager` folder for a full working example.
 
 #### Define your queries
-
-- Query: - string - 'select \* from create_user($1, $2)' - The query you want to run
-- Alias: - string - 'createUser' - The alias for this query
-- Description - string - The description for this query - Used for documentation
-- Parameters - Record<string, ZodAny>[] - The parameters in order of use. The array format helps maintain this order.
-  - If a parameter is used twice declare it twice and it will be merged down into a single item (see Note on duplicate parameters below).
-- Returns - ZodAny - The expected output data type schema.
 
 ```typescript
 import { z } from "zod";
@@ -32,7 +27,6 @@ const createUser = query({
     query: 'select * from create_user($1, $2)',
     alias: 'createUser',
     description: 'Create a user',
-    // Use the queryParameter helper function to create explicit single-key objects for your query parameters
     parameters: [
         queryParameter('name', userTableSchema.shape.name),
         queryParameter('description', description: userTableSchema.shape.description)
@@ -40,42 +34,9 @@ const createUser = query({
     returns: userTableSchema
 })
 
-// When you are ready to package your queries, you can put them in groups by a common entity
 const userQueries = queryGroup([
     createUser
 ])
-```
-
-### Note on duplicate parameters
-
-Hyphothetically if you need to use the same parameter twice in a query. For example here (bad example for demonstration only) where $1 and $2 will be the same user_id.
-
-```sql
-select * from my_table
-where user_id = $1
-AND user_id NOT IN (
-  select user_id from my_table where user_id <> $2
-)
-```
-
-In this instance you would declare the property twice and it will be merged down into one key in the function call. You need to declare all the values so every item in the array can be parameterized properly.
-
-```typescript
-const userIdParameter = queryParameter("id", userTableSchema.shape.id);
-
-const queryThatWillNeverHappen = query({
-  query: `select * from my_table
-    where user_id = $1
-    AND user_id NOT IN (
-      select user_id from my_table where user_id <> $2
-    )`,
-  alias: "queryThatWillNeverHappen",
-  description: "Just an example for merging keys",
-  parameters: [userIdParameter, userIdParameter],
-  returns: z.unknown(),
-});
-// userId only needs to be populated once
-queryManager.run("queryThatWillNeverHappen", { userId: 1234 });
 ```
 
 ### Document Manager
