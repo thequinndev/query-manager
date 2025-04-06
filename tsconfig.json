@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "composite": true,
     "target": "ES2020",
@@ -29,10 +30,6 @@
     "checkJs": false,
     "noEmit": false,
     "isolatedModules": true,
-    "paths": {
-      "@thequinndev/query-manager/*": ["./src/query-manager/*"],
-      "@examples/*": ["./examples/*"]
-    }
   },
   "include": [
     "src/**/*",

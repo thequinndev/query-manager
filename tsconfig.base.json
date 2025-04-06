@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "resolveJsonModule": true,
+      "noImplicitAny": true,
+      "noImplicitThis": true,
+      "alwaysStrict": true,
+      "allowJs": true,
+      "skipDefaultLibCheck": true,
+      "strictFunctionTypes": true,
+      "strictNullChecks": true,
+      "forceConsistentCasingInFileNames": true,
+      "types": ["vitest/globals", "node"],
+      "paths": {
+        "@thequinndev/query-manager/*": ["./src/query-manager/*"],
+        "@examples/*": ["./examples/*"]
+      }
+    }
+  }
+  

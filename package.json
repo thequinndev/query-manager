@@ -3,31 +3,35 @@
   "version": "0.0.1",
   "description": "",
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./types": {
+      "import": "./dist/types/index.d.ts",
+      "require": "./dist/types/index.d.ts"
+    }
+  },
   "scripts": {
     "test": "vitest",
     "coverage": "vitest --coverage",
-    "build": "vite build && tsc -p tsconfig.build.json",
+    "build": "pnpm run build:cjs && pnpm run build:esm",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
     "generate:example:db-doc": "npx tsx ./examples/query-manager/document/index.ts",
     "pg:up": "docker build -t query-manager-pg . && docker run --rm --name qm-test-pg -p 5432:5432 -d query-manager-pg",
     "pg:logs": "docker logs qm-test-pg",
     "pg:down": "docker kill qm-test-pg",
     "pg:test": "npx tsx ./examples/clients/postgres.ts"
   },
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.js",
-      "default": "./dist/index.js"
-    }
-  },
   "files": [
     "dist",
     "README.md",
     "LICENSE",
-    "package.json",
-    "index.d.ts"
+    "package.json"
   ],
   "repository": {
     "type": "git",

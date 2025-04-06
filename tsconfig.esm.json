@@ -1,0 +1,27 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+      "moduleResolution": "node",
+      "target": "ES6",
+      "module": "ESNext",
+      "declaration": true,
+      "declarationMap": true,
+      "declarationDir": "./dist/types",
+      "outDir": "./dist/esm",
+      "esModuleInterop": true,
+    },
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "node_modules",
+      "dist",
+      "examples",
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      "**/*.test.js",
+      "**/*.spec.js",
+      "vite.config.mts"
+    ]
+}
+  
