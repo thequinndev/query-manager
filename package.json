@@ -15,6 +15,7 @@
     "build": "pnpm run build:esm",
     "build:esm": "tsc -p tsconfig.esm.json",
     "lint": "npx eslint",
+    "lint-ts": "tsc --noEmit",
     "generate:example:db-doc": "npx tsx ./examples/query-manager/document/index.ts",
     "pg:up": "docker build -t query-manager-pg . && docker run --rm --name qm-test-pg -p 5432:5432 -d query-manager-pg",
     "pg:logs": "docker logs qm-test-pg",
