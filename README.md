@@ -2,6 +2,7 @@
 ## Module Intent
 [Read about it here](https://github.com/thequinndev/query-manager/blob/main/module-intent.md)
 
+
 ### Query Manager
 The query manager utilities can be used to store queries relating to specific database entities. The queries can be in any format you like. See the ``examples/query-manager`` folder for a full working example.
 
@@ -110,4 +111,39 @@ A document example that was generated using [DocumentManager](https://github.com
 To generate it, run 
 ```
 pnpm run generate:example:db-doc
+```
+
+## Setup
+### Install
+```
+pnpm install
+```
+
+### Tests
+#### Unit
+```
+pnpm test
+```
+#### Coverage
+```
+pnpm coverage
+```
+#### Functional (postgres docker)
+```
+pnpm pg:up
+```
+
+Wait until up
+```
+pnpm pg:test
+```
+
+##### Reset
+```
+pnpm pg:down
+```
+
+##### Logs
+```
+pnpm pg:logs
 ```
