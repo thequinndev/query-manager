@@ -1,71 +1,82 @@
-import { ClientInterface } from "./client.interface"
-import { ClientQueryItem, GetQuery, QueriesByAlias, QueryIn, QueryOut } from "../queries"
+import { ClientInterface } from "./client.interface";
+import {
+  ClientQueryItem,
+  GetQuery,
+  QueriesByAlias,
+  QueryIn,
+  QueryOut,
+} from "../queries";
 
 export const QueryManager = <
-    Queries extends QueriesByAlias<ClientQueryItem[]>,
-    Client
+  Queries extends QueriesByAlias<ClientQueryItem[]>,
+  Client,
 >(config: {
-    client: ClientInterface<Client>,
-    queries: Queries
+  client: ClientInterface<Client>;
+  queries: Queries;
 }) => {
+  const run = async <
+    Alias extends keyof Queries,
+    QueryItem extends GetQuery<Queries, Alias>,
+    In extends QueryIn<QueryItem["parameters"]>,
+    Out extends QueryOut<QueryItem>,
+  >(
+    alias: Alias,
+    parameters?: In,
+  ): Promise<Out> => {
+    const queryItem = config.queries[alias] as QueryItem;
+    let result = await config.client.statementRun({
+      queryItem,
+      parameters,
+    });
 
-    const run = async <
-        Alias extends keyof Queries,
-        QueryItem extends GetQuery<Queries, Alias>,
-        In extends QueryIn<QueryItem['parameters']>,
-        Out extends QueryOut<QueryItem>
-    >(alias: Alias, parameters?: In): Promise<Out> => {
-        const queryItem = config.queries[alias] as QueryItem
-        let result = await config.client.statementRun({
-            queryItem,
-            parameters
-        })
-
-        // If onResultRetrieval has been declared then call it
-        if (queryItem.onResultRetrieval) {
-           result = queryItem.onResultRetrieval(result)
-        }
-
-        // Return the parsed result
-        return queryItem.returns.parse(result)
+    // If onResultRetrieval has been declared then call it
+    if (queryItem.onResultRetrieval) {
+      result = queryItem.onResultRetrieval(result);
     }
 
-    const doOperationAsClient = async <
-        Alias extends keyof Queries,
-        QueryItem extends GetQuery<Queries, Alias>,
-        In extends QueryIn<QueryItem['parameters']>,
-        Out extends QueryOut<QueryItem>,
-        Fn extends (
-            input: {
-                client: Client,
-                queryItem: QueryItem,
-                parameters: (params: In) => In,
-                result: (resolve: unknown) => Out
-            }
-        ) => Out
-    >(alias: Alias, fn: Fn) => {
-        const queryItem = config.queries[alias] as QueryItem
+    // Return the parsed result
+    return queryItem.returns.parse(result);
+  };
 
-        const result = (input: unknown): Out => {
-            return input as Out
-        }
+  const doOperationAsClient = async <
+    Alias extends keyof Queries,
+    QueryItem extends GetQuery<Queries, Alias>,
+    In extends QueryIn<QueryItem["parameters"]>,
+    Out extends QueryOut<QueryItem>,
+    Fn extends (input: {
+      client: Client;
+      queryItem: QueryItem;
+      parameters: (params: In) => In;
+      result: (resolve: unknown) => Out;
+    }) => Out,
+  >(
+    alias: Alias,
+    fn: Fn,
+  ) => {
+    const queryItem = config.queries[alias] as QueryItem;
 
-        const parameters = <T>(input: T) => {
-            return input
-        }
+    const result = (input: unknown): Out => {
+      return input as Out;
+    };
 
-        return queryItem.returns.parse(fn({
-            client: config.client.client,
-            queryItem: queryItem as QueryItem,
-            result,
-            parameters,
-        }))
-    }
+    const parameters = <T>(input: T) => {
+      return input;
+    };
 
-    return {
+    return queryItem.returns.parse(
+      fn({
         client: config.client.client,
-        doOperationAsClient,
-        run,
-        setClient: config.client.setClient
-    }
-}
+        queryItem: queryItem as QueryItem,
+        result,
+        parameters,
+      }),
+    );
+  };
+
+  return {
+    client: config.client.client,
+    doOperationAsClient,
+    run,
+    setClient: config.client.setClient,
+  };
+};

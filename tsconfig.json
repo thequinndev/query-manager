@@ -29,14 +29,8 @@
     "allowJs": true,
     "checkJs": false,
     "noEmit": false,
-    "isolatedModules": true,
+    "isolatedModules": true
   },
-  "include": [
-    "src/**/*",
-    "examples/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-  ]
+  "include": ["src/**/*", "examples/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
