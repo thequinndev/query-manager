@@ -151,7 +151,7 @@ pnpm coverage
 pnpm pg:up
 ```
 
-Wait until up
+Wait until up, then
 
 ```
 pnpm pg:test
