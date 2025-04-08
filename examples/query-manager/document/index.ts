@@ -1,8 +1,6 @@
 import { DocumentManager } from "@thequinndev/query-manager/document";
 import { writeFileSync } from "fs";
 import { userQueries } from "../queries/query-group";
-import { fileURLToPath } from "url";
-import path from "path";
 
 const document = DocumentManager({
   queries: userQueries,
@@ -66,5 +64,4 @@ document.annotate("createUser", {
 
 const doc = document.compile();
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-writeFileSync(__dirname + "/doc.example.md", doc);
+writeFileSync("./examples/query-manager/document/doc.example.md", doc);
