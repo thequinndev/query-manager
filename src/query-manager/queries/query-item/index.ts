@@ -1,4 +1,4 @@
-import { addQueryItemMeta } from "@thequinndev/query-manager/utility/derive-meta";
+import { addQueryItemMeta } from "../../../query-manager/utility/derive-meta";
 import { z } from "zod";
 
 export enum ParameterStrategy {
