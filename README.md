@@ -55,15 +55,19 @@ const documentManager = DocumentManager({
 // You can also annotate your queries with additional fields if you want
 documentManager.annotate('createUser', {
     title: 'Create a new user',
-    parameterExample: {
-        name: 'Richard Sanders',
-        description: 'A valuable user.'
+    parameters: {
+        example: {
+            name: 'Richard Sanders',
+            description: 'A valuable user.'
+        }
     },
-    returnExample: {
-        id: 1234,
-        name: 'Richard Sanders',
-        description: 'A valuable user.',
-        date: '01/01/1970'
+    returns: {
+        example: {
+            id: 1234,
+            name: 'Richard Sanders',
+            description: 'A valuable user.',
+            date: '01/01/1970'
+        }
     }
 })
 
