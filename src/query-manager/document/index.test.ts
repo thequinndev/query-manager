@@ -5,10 +5,14 @@ import { z } from "zod";
 const annotateMockManager = <T extends any>(manager: T) => {
   (manager as any).annotate("mockDbQueryTest", {
     title: "Mock",
-    parameterExample: {
-      id: 1234,
+    parameters: {
+      example: {
+        id: 1234,
+      },
     },
-    returnExample: 5678,
+    returns: {
+      example: 5678,
+    },
   });
   return manager;
 };

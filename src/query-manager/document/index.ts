@@ -9,8 +9,12 @@ import { compileDataTypes } from "./process/compile-data-types";
 
 type QueryAnnotation<T extends BaseCollapsedQueryItem> = {
   title?: string;
-  parameterExample?: QueryIn<T["parameters"]>;
-  returnExample?: QueryOut<T>;
+  parameters?: {
+    example: QueryIn<T["parameters"]>;
+  };
+  returns: {
+    example: QueryOut<T>;
+  };
 };
 
 export const DocumentManager = <
@@ -52,17 +56,17 @@ export const DocumentManager = <
 
       aliasSection.push(`\`\`\`\n${query.query}\n\`\`\``);
 
-      if (meta?.parameterExample) {
+      if (meta?.parameters?.example) {
         aliasSection.push(`### Invoke Example`);
         aliasSection.push(
-          `\`\`\`\nqueryManager.run('${query.alias}', ${JSON.stringify(meta.parameterExample, null, 2)})\n\`\`\``,
+          `\`\`\`\nqueryManager.run('${query.alias}', ${JSON.stringify(meta.parameters.example, null, 2)})\n\`\`\``,
         );
       }
 
-      if (meta?.returnExample) {
+      if (meta?.returns?.example) {
         aliasSection.push(`### Return Example`);
         aliasSection.push(
-          `\`\`\`\n${JSON.stringify(meta.returnExample, null, 2)}\n\`\`\``,
+          `\`\`\`\n${JSON.stringify(meta.returns.example, null, 2)}\n\`\`\``,
         );
       }
 

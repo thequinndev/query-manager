@@ -8,57 +8,71 @@ const document = DocumentManager({
 
 document.annotate("getAllUsers", {
   title: "Get all current users",
-  returnExample: [
-    {
+  returns: {
+    example: [
+      {
+        id: 1234,
+        name: "Richard Sanders",
+        description: "A valuable user.",
+        date: "01/01/1970",
+      },
+      {
+        id: 1235,
+        name: "Karen Sanders",
+        description: "A valuable user.",
+        date: "01/01/1970",
+      },
+    ],
+  },
+});
+
+document.annotate("getUserById", {
+  title: "Select user by ID",
+  parameters: {
+    example: {
+      id: 1234,
+    },
+  },
+  returns: {
+    example: {
       id: 1234,
       name: "Richard Sanders",
       description: "A valuable user.",
       date: "01/01/1970",
     },
-    {
-      id: 1235,
-      name: "Karen Sanders",
-      description: "A valuable user.",
-      date: "01/01/1970",
-    },
-  ],
-});
-
-document.annotate("getUserById", {
-  title: "Select user by ID",
-  parameterExample: {
-    id: 1234,
-  },
-  returnExample: {
-    id: 1234,
-    name: "Richard Sanders",
-    description: "A valuable user.",
-    date: "01/01/1970",
   },
 });
 
 document.annotate("getUserNameAndDateById", {
   title: "Select only user name and date by ID",
-  parameterExample: {
-    id: 1234,
+  parameters: {
+    example: {
+      id: 1234,
+    },
   },
-  returnExample: {
-    name: "Richard Sanders",
-    date: "01/01/1970",
+  returns: {
+    example: {
+      name: "Richard Sanders",
+      date: "01/01/1970",
+    },
   },
 });
 
 document.annotate("createUser", {
   title: "Create a new user",
-  parameterExample: {
-    name: "Richard Sanders",
-    description: "A valuable user.",
+  parameters: {
+    example: {
+      name: "Richard Sanders",
+      description: "A valuable user.",
+    },
   },
-  returnExample: {
-    id: 1234,
-    name: "Richard Sanders",
-    description: "A valuable user.",
-    date: "01/01/1970",
+  returns: {
+    example: {
+      id: 1234,
+      name: "Richard Sanders",
+      description: "A valuable user.",
+      date: "01/01/1970",
+    },
   },
 });
 
