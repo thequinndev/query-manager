@@ -49,12 +49,12 @@ export const DocumentManager = <
         aliasSection.push(`> ${query.description}`);
       }
 
+      aliasSection.push(`\`\`\`\n${query.query}\n\`\`\``);
+
       const dataTypes = compileDataTypes(query);
       if (dataTypes) {
         aliasSection.push(dataTypes);
       }
-
-      aliasSection.push(`\`\`\`\n${query.query}\n\`\`\``);
 
       if (meta?.parameters?.example) {
         aliasSection.push(`### Invoke Example`);
