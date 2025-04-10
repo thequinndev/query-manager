@@ -11,12 +11,12 @@ export const inferParameterStrategy = (
     return ParameterStrategy.Dollar;
   }
 
-  if (queryString.includes(":")) {
-    return ParameterStrategy.Colon;
-  }
-
   if (queryString.includes("&")) {
     return ParameterStrategy.Ampersand;
+  }
+
+  if (queryString.includes(":")) {
+    return ParameterStrategy.Colon;
   }
 
   return ParameterStrategy.KeyValue;
@@ -25,14 +25,38 @@ export const inferParameterStrategy = (
 export const collectParameters = (
   queryItem: BaseCollapsedQueryItem,
 ): string[] => {
-  const paramaterStrategy = inferParameterStrategy(queryItem.query);
+  const parameterStrategy = inferParameterStrategy(queryItem.query);
 
-  if (paramaterStrategy === ParameterStrategy.Dollar) {
+  if (parameterStrategy === ParameterStrategy.Dollar) {
     return queryItem.query.match(/\$[0-9]+/g) ?? [];
   }
 
-  if (paramaterStrategy === ParameterStrategy.Colon) {
-    return queryItem.query.match(/\:[a-zA-Z]+/g) ?? [];
+  if (parameterStrategy === ParameterStrategy.Colon) {
+    const params = [];
+    for (const paramKey in queryItem.parameters?.collapsed ?? {}) {
+      const searchParam = `:${paramKey}`;
+      if (queryItem.query.includes(searchParam)) {
+        params.push(searchParam);
+      }
+    }
+
+    return params;
+  }
+
+  if (parameterStrategy === ParameterStrategy.Ampersand) {
+    const params = [];
+    for (const paramKey in queryItem.parameters?.collapsed ?? {}) {
+      const searchParam = `&${paramKey}`;
+      if (queryItem.query.includes(searchParam)) {
+        params.push(searchParam);
+      }
+    }
+
+    return params;
+  }
+
+  if (parameterStrategy === ParameterStrategy.QuestionMark) {
+    return queryItem.query.match(/\?/g) ?? [];
   }
 
   return [];

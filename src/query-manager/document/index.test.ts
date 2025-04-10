@@ -35,7 +35,7 @@ describe("DocumentManager", () => {
       "## Mock [alias: mockDbQueryTest]",
       "> Just a test for a mock",
       "### Query",
-      "* id",
+      "* ? => id",
       "\t* type: number",
       "```",
       "select * from any where id = ?",
