@@ -7,6 +7,11 @@ export const compileDataTypes = (item: BaseCollapsedQueryItem) => {
   const params = collectParameters(item);
 
   const dataTypeSections: string[] = [];
+
+  if (item.parameters?.original?.length) {
+    dataTypeSections.push(`### Parameters `);
+  }
+
   let index = 0;
   for (const param of item.parameters?.original ?? []) {
     const firstKey = Object.keys(param)[0];
@@ -14,7 +19,9 @@ export const compileDataTypes = (item: BaseCollapsedQueryItem) => {
     const props = processProperties(schema);
 
     const paramSection = params[index] ? `${params[index]} => ` : "";
-    dataTypeSections.push(`* ${paramSection}${firstKey}${props.join("\n")}`);
+    dataTypeSections.push(
+      `#### ${paramSection}${firstKey}\n${props.join("\n")}`,
+    );
     index++;
   }
 

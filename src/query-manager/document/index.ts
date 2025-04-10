@@ -45,7 +45,6 @@ export const DocumentManager = <
         aliasSection.push(`> ${query.description}`);
       }
 
-      aliasSection.push(`### Query`);
       const dataTypes = compileDataTypes(query);
       if (dataTypes) {
         aliasSection.push(dataTypes);

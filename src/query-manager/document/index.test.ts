@@ -34,9 +34,9 @@ describe("DocumentManager", () => {
     const expected: string[] = [
       "## Mock [alias: mockDbQueryTest]",
       "> Just a test for a mock",
-      "### Query",
-      "* ? => id",
-      "\t* type: number",
+      "### Parameters ",
+      "#### ? => id",
+      "* type: number",
       "```",
       "select * from any where id = ?",
       "```",

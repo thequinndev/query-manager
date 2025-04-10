@@ -14,7 +14,7 @@ describe("compileDataTypes", () => {
 
     const result = compileDataTypes(queryItem);
 
-    const resultArray = [`* $1 => id`, `\t* type: number`];
+    const resultArray = [`### Parameters `, `#### $1 => id`, `* type: number`];
 
     expect(result).toEqual(resultArray.join("\n"));
   });
@@ -30,7 +30,7 @@ describe("compileDataTypes", () => {
 
     const result = compileDataTypes(queryItem);
 
-    const resultArray = [`* :id => id`, `\t* type: number`];
+    const resultArray = [`### Parameters `, `#### :id => id`, `* type: number`];
 
     expect(result).toEqual(resultArray.join("\n"));
   });
