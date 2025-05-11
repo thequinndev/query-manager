@@ -43,4 +43,12 @@ describe("operationGroup", () => {
       description: "test",
     });
   });
+
+  it("should provide the original query item", () => {
+    const { QueryItem } = userQueryOperations.query("createUser");
+
+    expect(QueryItem.query).toEqual("select * from create_user($1, $2)");
+
+    expect(QueryItem.meta.returnsOne).toEqual(true);
+  });
 });

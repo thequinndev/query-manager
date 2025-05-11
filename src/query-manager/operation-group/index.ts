@@ -28,6 +28,7 @@ export const operationGroup = <
       Parse: {
         returns: queryItem.returns.parse,
       },
+      QueryItem: queryItem,
       returns: <Returns extends QueryOut<QueryItem>>(returns: Returns) =>
         returns,
     };
