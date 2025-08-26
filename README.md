@@ -1,4 +1,4 @@
-# DB Manager
+# Query Manager
 
 ## Module Intent
 
@@ -132,4 +132,22 @@ pnpm pg:down
 
 ```
 pnpm pg:logs
+```
+
+## Fixes
+
+### Issue
+
+Unable to test due to this error with better-sqlite3
+
+```
+pnpm test
+```
+
+> Error: Could not locate the bindings file. Tried:
+
+### Fix
+
+```
+npm rebuild better-sqlite3
 ```
